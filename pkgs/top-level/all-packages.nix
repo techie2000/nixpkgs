@@ -17127,6 +17127,9 @@ with pkgs;
   spidermonkey_115 = callPackage ../development/interpreters/spidermonkey/115.nix {
     inherit (darwin) libobjc;
   };
+  spidermonkey_128 = callPackage ../development/interpreters/spidermonkey/128.nix {
+    inherit (darwin) libobjc;
+  };
 
   starlark-rust = callPackage ../development/interpreters/starlark-rust { };
 
