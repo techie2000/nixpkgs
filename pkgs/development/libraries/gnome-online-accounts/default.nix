@@ -31,13 +31,13 @@
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "gnome-online-accounts";
-  version = "3.50.4";
+  version = "3.51.1";
 
   outputs = [ "out" "dev" ] ++ lib.optionals enableBackend [ "man" "devdoc" ];
 
   src = fetchurl {
     url = "mirror://gnome/sources/gnome-online-accounts/${lib.versions.majorMinor finalAttrs.version}/gnome-online-accounts-${finalAttrs.version}.tar.xz";
-    hash = "sha256-MMoTA4zXpp1bay1TZD+6ZUjRcSuSXwwhbzEzw2y/d3M=";
+    hash = "sha256-LfoklMDCO8lmMgluuLxzWRk/780+RCNTugqMNHNFtDI=";
   };
 
   mesonFlags = [
