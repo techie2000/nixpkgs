@@ -4,6 +4,7 @@
 , substituteAll
 , fetchurl
 , pkg-config
+, docutils
 , gettext
 , graphene
 , gi-docgen
@@ -89,6 +90,7 @@ stdenv.mkDerivation (finalAttrs: {
   ];
 
   nativeBuildInputs = [
+    docutils # for rst2man, rst2html5
     gettext
     gobject-introspection
     makeWrapper
