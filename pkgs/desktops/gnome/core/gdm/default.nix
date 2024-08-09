@@ -128,6 +128,10 @@ stdenv.mkDerivation (finalAttrs: {
     echo #!/bin/sh > build-aux/find-x-server.sh
     echo "echo ${lib.getBin xorg.xorgserver}/bin/X" >> build-aux/find-x-server.sh
     patchShebangs build-aux/find-x-server.sh
+
+    # Reverts https://gitlab.gnome.org/GNOME/gdm/-/commit/b0f802e36ff948a415bfd2bccaa268b6990515b7
+    substituteInPlace meson.build \
+      --replace-fail "dconf_prefix = dconf_dep.get_variable(pkgconfig: 'prefix')" "dconf_prefix = gdm_prefix"
   '';
 
   preInstall = ''
