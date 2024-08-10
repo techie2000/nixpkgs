@@ -74,11 +74,6 @@ stdenv.mkDerivation (finalAttrs: {
     hash = "sha256-yJ6ARNnVy2FmOji96aGTKTY+MXH5qv6O6eqb3xgFt7U=";
   };
 
-  patches = assert lib.versionOlder gsettings-desktop-schemas.version "47"; [
-    # Should be dropped on gsettings-desktop-schemas 47 update.
-    ./g-d-s-46-compact.patch
-  ];
-
   mesonFlags = [
     "-Degl_device=true"
     "-Dinstalled_tests=false" # TODO: enable these
