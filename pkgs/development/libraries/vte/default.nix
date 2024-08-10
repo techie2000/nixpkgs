@@ -1,6 +1,6 @@
 { stdenv
 , lib
-, fetchurl
+, fetchFromGitLab
 , fetchpatch
 , gettext
 , pkg-config
@@ -37,9 +37,12 @@ stdenv.mkDerivation (finalAttrs: {
   outputs = [ "out" "dev" ]
     ++ lib.optional (gtkVersion != null) "devdoc";
 
-  src = fetchurl {
-    url = "mirror://gnome/sources/vte/${lib.versions.majorMinor finalAttrs.version}/vte-${finalAttrs.version}.tar.xz";
-    hash = "sha256-GOOsTr7wmpOBy+T6fFcTK1MYOmeBQdMrLLfYbdtvyi4=";
+  src = fetchFromGitLab {
+    domain = "gitlab.gnome.org";
+    owner = "GNOME";
+    repo = "vte";
+    rev = finalAttrs.version;
+    hash = "sha256-pyK6tDD9S3asIvJXAifJshu2AOW915q/eUxx3+RbPo8=";
   };
 
   patches = [
@@ -104,6 +107,7 @@ stdenv.mkDerivation (finalAttrs: {
   postPatch = ''
     patchShebangs perf/*
     patchShebangs src/parser-seq.py
+    patchShebangs src/minifont-coverage.py
     patchShebangs src/modes.py
   '';
 
