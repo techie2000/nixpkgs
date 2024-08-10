@@ -22,6 +22,8 @@
 , ninja
 , libadwaita
 , gsettings-desktop-schemas
+, gst_all_1
+, pipewire
 }:
 
 stdenv.mkDerivation rec {
@@ -47,6 +49,10 @@ stdenv.mkDerivation rec {
   ];
 
   buildInputs = [
+    gst_all_1.gstreamer
+    gst_all_1.gst-plugins-base
+    gst_all_1.gst-plugins-rs # GTK4 sink & paintable
+    pipewire # pipewiresrc
     gtk4
     glib
     libportal-gtk4
