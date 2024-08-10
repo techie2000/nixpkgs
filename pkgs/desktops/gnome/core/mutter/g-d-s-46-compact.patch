@@ -1,0 +1,61 @@
+diff --git a/src/backends/meta-input-settings.c b/src/backends/meta-input-settings.c
+index dd03e66b9..13728faa8 100644
+--- a/src/backends/meta-input-settings.c
++++ b/src/backends/meta-input-settings.c
+@@ -2024,7 +2024,7 @@ meta_input_settings_get_tool_button_action (MetaInputSettings       *input_setti
+   key = g_strdup_printf ("%s-action", prefix);
+   settings = lookup_tool_settings (tool, device);
+   action = g_settings_get_enum (settings, key);
+-  if (keybinding && action == G_DESKTOP_STYLUS_BUTTON_ACTION_KEYBINDING)
++  if (0)
+     {
+       g_autofree char *binding_key = g_strdup_printf ("%s-keybinding", prefix);
+       *keybinding = g_settings_get_string (settings, binding_key);
+diff --git a/src/backends/native/meta-seat-impl.c b/src/backends/native/meta-seat-impl.c
+index c1e46a050..ea98f9db8 100644
+--- a/src/backends/native/meta-seat-impl.c
++++ b/src/backends/native/meta-seat-impl.c
+@@ -841,11 +841,11 @@ meta_seat_impl_notify_button_in_impl (MetaSeatImpl       *seat_impl,
+           button = BTN_FORWARD;
+           button_nr = meta_evdev_tool_button_to_clutter (button);
+           break;
+-        case G_DESKTOP_STYLUS_BUTTON_ACTION_SWITCH_MONITOR:
+-        case G_DESKTOP_STYLUS_BUTTON_ACTION_KEYBINDING:
+-          // button evdev code left as-is, i.e. BTN_STYLUS or whatever
+-          button_nr = 0;
+-          break;
++        // case G_DESKTOP_STYLUS_BUTTON_ACTION_SWITCH_MONITOR:
++        // case G_DESKTOP_STYLUS_BUTTON_ACTION_KEYBINDING:
++        //   button evdev code left as-is, i.e. BTN_STYLUS or whatever
++        //   button_nr = 0;
++        //   break;
+         default:
+           g_warn_if_reached ();
+         }
+diff --git a/src/core/meta-tool-action-mapper.c b/src/core/meta-tool-action-mapper.c
+index 7d28e6b60..ec759c6a4 100644
+--- a/src/core/meta-tool-action-mapper.c
++++ b/src/core/meta-tool-action-mapper.c
+@@ -113,14 +113,14 @@ meta_tool_action_mapper_handle_button (MetaToolActionMapper *mapper,
+     case G_DESKTOP_STYLUS_BUTTON_ACTION_FORWARD:
+       /* These are handled as normal button events, nothing to do here */
+       return FALSE;
+-    case G_DESKTOP_STYLUS_BUTTON_ACTION_SWITCH_MONITOR:
+-      if (is_press)
+-        tablet_klass->cycle_tablet_output (tablet_mapper, device);
+-      return TRUE;
+-    case G_DESKTOP_STYLUS_BUTTON_ACTION_KEYBINDING:
+-      if (accel)
+-        tablet_klass->emulate_keybinding (tablet_mapper, accel, is_press);
+-      return TRUE;
++    // case G_DESKTOP_STYLUS_BUTTON_ACTION_SWITCH_MONITOR:
++    //   if (is_press)
++    //     tablet_klass->cycle_tablet_output (tablet_mapper, device);
++    //   return TRUE;
++    // case G_DESKTOP_STYLUS_BUTTON_ACTION_KEYBINDING:
++    //   if (accel)
++    //     tablet_klass->emulate_keybinding (tablet_mapper, accel, is_press);
++    //   return TRUE;
+     default:
+       g_warn_if_reached ();
+       return FALSE;
