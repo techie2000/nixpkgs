@@ -19,6 +19,7 @@
 , gspell
 , libxslt
 , gobject-introspection
+, itstool
 , flatpak
 , fwupd
 , gtk4
@@ -74,6 +75,7 @@ stdenv.mkDerivation (finalAttrs: {
     gtk-doc
     desktop-file-utils
     gobject-introspection
+    itstool
   ];
 
   buildInputs = [
