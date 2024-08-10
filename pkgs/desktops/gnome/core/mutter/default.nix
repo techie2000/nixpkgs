@@ -27,7 +27,6 @@
 , libxkbfile
 , xkeyboard_config
 , libxkbcommon
-, libXrender
 , libxcb
 , libXrandr
 , libXinerama
@@ -78,7 +77,7 @@ stdenv.mkDerivation (finalAttrs: {
   mesonFlags = [
     "-Degl_device=true"
     "-Dinstalled_tests=false" # TODO: enable these
-    "-Dtests=false"
+    "-Dtests=disabled"
     "-Dwayland_eglstream=true"
     "-Dprofiler=true"
     "-Dxwayland_path=${lib.getExe xwayland}"
@@ -152,7 +151,6 @@ stdenv.mkDerivation (finalAttrs: {
     libxkbfile
     xkeyboard_config
     libxkbcommon
-    libXrender
     libxcb
     libXrandr
     libXinerama
