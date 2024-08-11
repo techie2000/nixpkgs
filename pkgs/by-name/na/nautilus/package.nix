@@ -53,9 +53,12 @@ stdenv.mkDerivation (finalAttrs: {
     hash = "sha256-ldMcmW6a2nABx2NnrT0ed9GZW7o7thPIwA7xb7mK880=";
   };
 
-  patches = [
+  patches = assert lib.versionOlder tracker.version "3.8"; [
     # Allow changing extension directory using environment variable.
     ./extension_dir.patch
+
+    # To be dropped on tinysparql and localsearch update.
+    ./tracker-compact.patch
 
     # Hardcode required paths.
     (substituteAll {
