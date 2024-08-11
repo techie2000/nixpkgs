@@ -33,14 +33,14 @@
 }:
 
 stdenv.mkDerivation (finalAttrs: {
-  pname = "tracker";
-  version = "3.7.3";
+  pname = "tinysparql";
+  version = "3.8.beta";
 
   outputs = [ "out" "dev" "devdoc" ];
 
   src = fetchurl {
-    url = with finalAttrs; "mirror://gnome/sources/${pname}/${lib.versions.majorMinor version}/${pname}-${version}.tar.xz";
-    hash = "sha256-qz1KUJN+BMXteEb227mZ4pCYGUAvOJylku5rd90o0fk=";
+    url = with finalAttrs; "mirror://gnome/sources/tinysparql/${lib.versions.majorMinor version}/tinysparql-${version}.tar.xz";
+    hash = "sha256-Xn3Fr+Py5XbUNyXXU8hpFiuhnoeCkW362+ILk8eIey4=";
   };
 
   strictDeps = true;
@@ -91,10 +91,9 @@ stdenv.mkDerivation (finalAttrs: {
     "-Ddocs=true"
     (lib.mesonEnable "introspection" withIntrospection)
     (lib.mesonEnable "vapi" withIntrospection)
-    (lib.mesonBool "test_utils" withIntrospection)
   ] ++ (
     let
-      # https://gitlab.gnome.org/GNOME/tracker/-/blob/master/meson.build#L159
+      # https://gitlab.gnome.org/GNOME/tinysparql/-/blob/3.7.3/meson.build#L170
       crossFile = writeText "cross-file.conf" ''
         [properties]
         sqlite3_has_fts5 = '${lib.boolToString (lib.hasInfix "-DSQLITE_ENABLE_FTS3" sqlite.NIX_CFLAGS_COMPILE)}'
@@ -108,9 +107,9 @@ stdenv.mkDerivation (finalAttrs: {
   ];
 
   doCheck =
-    # https://gitlab.gnome.org/GNOME/tracker/-/issues/402
+    # https://gitlab.gnome.org/GNOME/tinysparql/-/issues/402
     !stdenv.isDarwin
-    # https://gitlab.gnome.org/GNOME/tracker/-/issues/398
+    # https://gitlab.gnome.org/GNOME/tinysparql/-/issues/398
     && !stdenv.is32bit;
 
   postPatch = ''
@@ -139,6 +138,7 @@ stdenv.mkDerivation (finalAttrs: {
       # We are using a symlink that will be overridden during installation.
       mkdir -p $out/lib
       ln -s $PWD/src/libtracker-sparql/libtracker-sparql-3.0${darwinDot0}${extension} $out/lib/libtracker-sparql-3.0${darwinDot0}${extension}${linuxDot0}
+      ln -s $PWD/src/libtracker-sparql/libtinysparql-3.0${darwinDot0}${extension} $out/lib/libtinysparql-3.0${darwinDot0}${extension}${linuxDot0}
     '';
 
   checkPhase = ''
@@ -166,6 +166,7 @@ stdenv.mkDerivation (finalAttrs: {
   passthru = {
     updateScript = gnome.updateScript {
       packageName = finalAttrs.pname;
+      attrPath = "tracker";
     };
     tests.pkg-config = testers.hasPkgConfigModules {
       package = finalAttrs.finalPackage;
