@@ -22,7 +22,6 @@
 , gnome
 , icu
 , libuuid
-, libsoup
 , libsoup_3
 , json-glib
 , avahi
@@ -72,7 +71,6 @@ stdenv.mkDerivation (finalAttrs: {
     libxml2
     sqlite
     icu
-    libsoup
     libsoup_3
     libuuid
     json-glib
@@ -137,17 +135,17 @@ stdenv.mkDerivation (finalAttrs: {
       # though, so we need to replace the absolute path with a local one during build.
       # We are using a symlink that will be overridden during installation.
       mkdir -p $out/lib
-      ln -s $PWD/src/libtracker-sparql/libtracker-sparql-3.0${darwinDot0}${extension} $out/lib/libtracker-sparql-3.0${darwinDot0}${extension}${linuxDot0}
       ln -s $PWD/src/libtracker-sparql/libtinysparql-3.0${darwinDot0}${extension} $out/lib/libtinysparql-3.0${darwinDot0}${extension}${linuxDot0}
     '';
 
   checkPhase = ''
     runHook preCheck
 
+    # The "tinysparql:core / service" test can take 180s+ when builder is in high load.
     dbus-run-session \
       --config-file=${dbus}/share/dbus-1/session.conf \
       meson test \
-        --timeout-multiplier 2 \
+        --timeout-multiplier 0 \
         --print-errorlogs
 
     runHook postCheck
@@ -176,10 +174,10 @@ stdenv.mkDerivation (finalAttrs: {
   meta = with lib; {
     homepage = "https://tracker.gnome.org/";
     description = "Desktop-neutral user information store, search tool and indexer";
-    mainProgram = "tracker3";
+    mainProgram = "tinysparql";
     maintainers = teams.gnome.members;
     license = licenses.gpl2Plus;
     platforms = platforms.unix;
-    pkgConfigModules = [ "tracker-sparql-3.0" "tracker-testutils-3.0" ];
+    pkgConfigModules = [ "tracker-sparql-3.0" "tinysparql-3.0" ];
   };
 })
