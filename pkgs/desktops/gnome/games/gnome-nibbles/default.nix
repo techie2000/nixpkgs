@@ -11,6 +11,7 @@
 , itstool
 , vala
 , libxml2
+, libadwaita
 , libgee
 , libgnome-games-support_2_0
 , meson
@@ -43,6 +44,7 @@ stdenv.mkDerivation (finalAttrs: {
     gtk4
     librsvg
     gsound
+    libadwaita
     libgee
     libgnome-games-support_2_0
   ];
