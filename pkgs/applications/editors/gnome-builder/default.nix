@@ -12,6 +12,7 @@
 , gobject-introspection
 , enchant
 , icu
+, gom
 , gtk4
 , gtksourceview5
 , json-glib
@@ -87,6 +88,7 @@ stdenv.mkDerivation (finalAttrs: {
     vte-gtk4
     enchant
     icu
+    gom
     gtk4
     gtksourceview5
     json-glib
