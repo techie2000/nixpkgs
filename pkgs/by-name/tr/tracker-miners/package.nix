@@ -149,5 +149,6 @@ stdenv.mkDerivation (finalAttrs: {
     maintainers = lib.teams.gnome.members;
     license = lib.licenses.gpl2Plus;
     platforms = lib.platforms.unix;
+    mainProgram = "localsearch";
   };
 })
